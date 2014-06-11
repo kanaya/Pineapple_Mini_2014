@@ -3,10 +3,10 @@
 // Written by Ichi Kanaya
 // Copyright (C) 2014, All rights reserved.
 
-// Door opener is activated: A0 = 0V
-// Door opener is not activated: A0 = 5V
+// Door opener is activated: A0 = 5V
+// Door opener is not activated: A0 = 0V
 
-#define TH  512
+#define TH  256
 #define LED 13
 
 int a0status = 0;
@@ -29,21 +29,21 @@ void loop() {
   int a0 = analogRead(A0);
   if (a0status >= TH) {
     if (a0 >= TH) {
-      // OFF --> OFF
+      // ON --> ON
       // do nothing
     }
     else {
-      // OFF --> ON
-      midiNoteOn(60, 127);
+      // ON --> OFF
+      // do nothing
     }
   }
   else {
     if (a0 >= TH) {
-      // ON --> OFF
-      // do nothing
+      // OFF --> ON
+      midiNoteOn(60, 127);
     }
     else {
-      // ON --> ON
+      // OFF --> OFF
       // do nothing
     }
   }
