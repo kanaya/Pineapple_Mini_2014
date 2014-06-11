@@ -7,17 +7,31 @@
 // Door opener is not activated: A0 = 0V
 
 #define TH  256
-#define LED 13
+
+#define LED         13
+#define BLINK_DELAY 50
+#define A_HIGH      255
+#define A_LOW       0
+#define A_SNZ       32
 
 int a0status = 0;
 
+void doubleBlink() {
+  analogWrite(LED, A_HIGH);
+  delay(BLINK_DELAY);
+  analogWrite(LED, A_LOW);
+  delay(BLINK_DELAY);
+  analogWrite(LED, A_HIGH);
+  delay(BLINK_DELAY);
+  analogWrite(LED, A_LOW);
+}
+
 void midiNoteOn(int pitch, int velocity) {
-  digitalWrite(LED, HIGH);
   Serial1.write(0x90);
   Serial1.write(pitch);
   Serial1.write(velocity);
-  delay(100);
-  digitalWrite(LED, LOW);
+  doubleBlink();
+  delay(BLINK_DELAY);
 }
 
 void setup() {
@@ -26,6 +40,8 @@ void setup() {
 }
 
 void loop() {
+  static int count = 0;
+  static int dir = 1;
   int a0 = analogRead(A0);
   if (a0status >= TH) {
     if (a0 >= TH) {
@@ -48,6 +64,21 @@ void loop() {
     }
   }
   a0status = a0;
+  analogWrite(LED, count);
+  if (dir == 1) {
+    ++count;
+  }
+  else {
+    --count;
+  }
+  if (count > A_SNZ) {
+    count = A_SNZ;
+    dir = 0;
+  }
+  else if (count < 0) {
+    count = 0;
+    dir = 1;
+  } 
   delay(100);
 }
 
