@@ -25,7 +25,7 @@
 #define A_LOW       0
 #define A_SNZ       32
 
-int a0status = 0;
+int the_status = 0;  // OFF
 
 void doubleBlink() {
   analogWrite(LED, A_HIGH);
@@ -48,33 +48,30 @@ void midiNoteOn(int pitch, int velocity) {
 void setup() {
   pinMode(LED, OUTPUT);
   Serial1.begin(31250);
+  midiNoteOn(60, 127);
 }
 
 void loop() {
   static int count = 0;
   static int dir = 1;
   int a0 = analogRead(A0);
-  if (a0status >= TH) {
-    if (a0 >= TH) {
-      // ON --> ON
-      // do nothing
-    }
-    else {
-      // ON --> OFF
-      // do nothing
-    }
+  int a1 = analogRead(A1);
+  
+  if (the_status >= TH) {
+    // ON --> ON
+    //   do nothing
+    // ON --> OFF
+    //   do nothing
   }
   else {
-    if (a0 >= TH) {
+    if (a0 >= TH || a1 >= TH) {
       // OFF --> ON
       midiNoteOn(60, 127);
     }
-    else {
-      // OFF --> OFF
-      // do nothing
-    }
+    // OFF --> OFF
+    //   do nothing
   }
-  a0status = a0;
+  the_status = (a1 > a0) ? a1 : a0;
   analogWrite(LED, count);
   if (dir == 1) {
     ++count;
