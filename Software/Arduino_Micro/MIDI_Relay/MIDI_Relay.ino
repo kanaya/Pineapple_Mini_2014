@@ -25,6 +25,9 @@
 #define A_LOW       0
 #define A_SNZ       32
 
+#define C4          60
+#define C5          72
+
 int the_status = 0;  // OFF
 
 void doubleBlink() {
@@ -48,7 +51,7 @@ void midiNoteOn(int pitch, int velocity) {
 void setup() {
   pinMode(LED, OUTPUT);
   Serial1.begin(31250);
-  midiNoteOn(60, 127);
+  midiNoteOn(C5, 127);
 }
 
 void loop() {
@@ -66,7 +69,7 @@ void loop() {
   else {
     if (a0 >= TH || a1 >= TH) {
       // OFF --> ON
-      midiNoteOn(60, 127);
+      midiNoteOn(C4, 127);
     }
     // OFF --> OFF
     //   do nothing
