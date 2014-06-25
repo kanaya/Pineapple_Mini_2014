@@ -1,0 +1,26 @@
+Pineapple Mini 2014
+
+Arduino Micro pins --> 
+
+Vin --> Power DC7-12V
+GND --> Power GND, 74LS07 GND, DIN p2, DIN GND, Mini DIN p2, Mini DIN GND, SW COM, SW LEDK, R220 --> Mini DIN p3, R220 --> Mini DIN p4
+RESET --> SW NO
+
+Vcc --> R220 --> DIN p4
+
+0/RX
+1/TX --> 74LS07 --> R220 --> DIN p5
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13 --> R220 --> LEDA
+A0 --> Mini DIN p3, R220 --> GND
+A1 --> Mini DIN p4, R220 --> GND
